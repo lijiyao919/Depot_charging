@@ -16,7 +16,8 @@ class Env:
         self._ev.add_soc(act)
         reward = self._reward_model.feedback(self._ev)
         terminated = Timer.is_end_time()
-        Timer.tick_time_step()
+        if not terminated:
+            Timer.tick_time_step()
         return self._state(), reward, terminated
 
     def _state(self):
