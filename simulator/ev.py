@@ -1,14 +1,15 @@
 import configparser
 from simulator.time import Timer
 from simulator.cost import SimpleCost
-
+import os
 class EV:
     def __init__(self):
-        config = configparser.ConfigParser()
-        config.read('config.ini')
+        _config = configparser.ConfigParser()
+        _config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
+        _config.read(_config_file)
 
-        self._max_soc = float(config.get('EV', 'max_soc'))
-        self._initial_soc = float(config.get('EV', 'initial_soc'))
+        self._max_soc = float(_config.get('EV', 'max_soc'))
+        self._initial_soc = float(_config.get('EV', 'initial_soc'))
 
         self._soc = self._initial_soc
         self._total_ec = 0

@@ -1,16 +1,18 @@
 import configparser
+import os
 
 class Timer:
     _time_step = 0
+    _config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
 
-    config = configparser.ConfigParser()
-    config.read('config.ini')
+    _config = configparser.ConfigParser()
+    _config.read(_config_file)
 
-    _start_time = int(config.get('Time', 'start_time'))
-    _end_time = int(config.get('Time', 'end_time'))
-    _on_peak_period_start = int(config.get('Time', 'on_peak_period_start'))
-    _on_peak_period_end = int(config.get('Time', 'on_peak_period_end'))
-    _per_time = int(config.get('Time', 'per_time'))
+    _start_time = int(_config.get('Time', 'start_time'))
+    _end_time = int(_config.get('Time', 'end_time'))
+    _on_peak_period_start = int(_config.get('Time', 'on_peak_period_start'))
+    _on_peak_period_end = int(_config.get('Time', 'on_peak_period_end'))
+    _per_time = int(_config.get('Time', 'per_time'))
 
     @staticmethod
     def reset():
