@@ -20,6 +20,9 @@ class Env:
             Timer.tick_time_step()
         return self._state(), reward, terminated
 
+    def show_performace_metrics(self):
+        print("the cost (ec+dc): ", self._ev.total_ec+self._ev.total_dc)
+        print("the SoC (kWh): ", self._ev.soc)
     def _state(self):
         return {"Time": Timer.get_time_step(), "soc":self._ev.soc}
 
