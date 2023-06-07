@@ -54,6 +54,10 @@ class Timer:
         return Timer._on_peak_period_end
 
     @staticmethod
+    def get_simulated_interval():
+        return Timer._simulated_interval
+
+    @staticmethod
     def get_units_in_one_hour():
         return 60//Timer._simulated_interval
 
@@ -64,6 +68,7 @@ if __name__=='__main__':
     print("Simulated end time: ", Timer.get_end_time())
     print("Peak hours started: ", Timer.get_on_peak_period_start())
     print("Peak hours ended: ", Timer.get_on_peak_period_end())
+    print("Simulated Interval: ", Timer.get_simulated_interval())
     print("Units in one hour: ", Timer.get_units_in_one_hour())
 
     Timer.reset()

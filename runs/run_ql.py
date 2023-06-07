@@ -1,4 +1,5 @@
 from algorithms.ql import QL_Agent
+from algorithms.agent import Generic_Agent
 from simulator.env import Env
 
 TOTAL_EPISODE = 30000
@@ -25,7 +26,9 @@ def run_ql():
         env.show_performace_metrics()
         print("\n")
         ep += 1
+    return agent
 
 if __name__=='__main__':
-    run_ql()
+    ag = run_ql()
+    Generic_Agent.plot_strategy(qlearning=ag)
 

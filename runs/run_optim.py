@@ -1,5 +1,6 @@
 from simulator.env import Env
 from algorithms.optim import Optim_Agent
+from algorithms.agent import Generic_Agent
 def run_optim():
     env = Env()
     state, _ = env.reset()
@@ -11,6 +12,8 @@ def run_optim():
         if terminate:
             break
     env.show_performace_metrics()
+    return agent
 
 if __name__=='__main__':
-    run_optim()
+    ag = run_optim()
+    Generic_Agent.plot_strategy(optimal=ag)
