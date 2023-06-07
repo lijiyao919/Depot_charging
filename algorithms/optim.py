@@ -1,10 +1,7 @@
-from simulator.env import Env
 from simulator.time import Timer
 
-def run_optim():
-    env = Env()
-    state, _ = env.reset()
-    while True:
+class Optim_Agent:
+    def select_act(self, state, ep):
         if Timer.is_peak_hours() or state["max_soc"] - state["soc"] == 0:
            act = 0
         else:
@@ -15,11 +12,4 @@ def run_optim():
                 act = 4
             else:
                 act = 2
-        next_state, reward, terminate, _ = env.step(act)
-        state = next_state
-        if terminate:
-            break
-    env.show_performace_metrics()
-
-if __name__=='__main__':
-    run_optim()
+        return act
