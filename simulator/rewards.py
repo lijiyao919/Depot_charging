@@ -11,7 +11,7 @@ class SimpleReward(Reward):
     def feedback(self, ev):
         r = -(ev.ec+ev.dc)
         if Timer.is_end_time():
-            r -= 0.01*(ev.max_soc-ev.soc)**2
+            r -= 0.1*(ev.max_soc-ev.soc)**2
         return r
 
 #For test

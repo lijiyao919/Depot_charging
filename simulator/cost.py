@@ -8,10 +8,11 @@ class SimpleCost:
     _config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
     _config.read(_config_file)
 
+    # rate per hour
     _on_peak_ec_rate = float(_config.get('Cost', 'on_peak_ec_rate'))
     _off_peak_ec_rate = float(_config.get('Cost', 'off_peak_ec_rate'))
-    _on_peak_dc_rate = float(_config.get('Cost', 'on_peak_dc_rate')) / Timer.get_per_time()
-    _off_peak_dc_rate = float(_config.get('Cost', 'off_peak_dc_rate')) / Timer.get_per_time()
+    _on_peak_dc_rate = float(_config.get('Cost', 'on_peak_dc_rate'))
+    _off_peak_dc_rate = float(_config.get('Cost', 'off_peak_dc_rate'))
 
     @staticmethod
     def get_on_peak_ec_rate():

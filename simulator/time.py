@@ -12,7 +12,7 @@ class Timer:
     _end_time = int(_config.get('Time', 'end_time'))
     _on_peak_period_start = int(_config.get('Time', 'on_peak_period_start'))
     _on_peak_period_end = int(_config.get('Time', 'on_peak_period_end'))
-    _per_time = int(_config.get('Time', 'per_time'))
+    _simulated_interval = int(_config.get('Time', 'simulated_interval'))
 
     @staticmethod
     def reset():
@@ -24,7 +24,7 @@ class Timer:
 
     @staticmethod
     def tick_time_step():
-        Timer._time_step += 1
+        Timer._time_step += Timer._simulated_interval
 
     @staticmethod
     def is_peak_hours():
@@ -54,8 +54,8 @@ class Timer:
         return Timer._on_peak_period_end
 
     @staticmethod
-    def get_per_time():
-        return Timer._per_time
+    def get_units_in_one_hour():
+        return 60//Timer._simulated_interval
 
 
 #For test
@@ -64,7 +64,7 @@ if __name__=='__main__':
     print("Simulated end time: ", Timer.get_end_time())
     print("Peak hours started: ", Timer.get_on_peak_period_start())
     print("Peak hours ended: ", Timer.get_on_peak_period_end())
-    print("Per time: ", Timer.get_per_time())
+    print("Units in one hour: ", Timer.get_units_in_one_hour())
 
     Timer.reset()
     Timer.tick_time_step()
@@ -76,8 +76,8 @@ if __name__=='__main__':
     Timer._time_step = 1000
     print(f"Time {Timer.get_time_step()} is peak hour: {Timer.is_peak_hours()}")
 
-    print(Timer.is_end_time())
+    print(f"{Timer.get_time_step()} is end? {Timer.is_end_time()}")
     Timer._time_step = 1440
-    print(Timer.is_end_time())
+    print(f"{Timer.get_time_step()} is end? {Timer.is_end_time()}")
 
 

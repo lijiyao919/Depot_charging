@@ -1,7 +1,7 @@
 from algorithms.ql import QL_Agent
 from simulator.env import Env
 
-TOTAL_EPISODE = 100000
+TOTAL_EPISODE = 30000
 
 def run_ql():
     env = Env()
@@ -13,7 +13,7 @@ def run_ql():
         state, _ = env.reset()
         done = False
         while not done:
-            act, eps_th = agent.select_act(state, ep)
+            act = agent.select_act(state, ep)
             next_state, reward, done, _ = env.step(act)
             exp["state"] = state
             exp["next_state"] = next_state
@@ -21,7 +21,7 @@ def run_ql():
             exp["act"] = act
             agent.learn(exp)
             state = next_state
-        print("The episode: ", ep, eps_th)
+        print("The episode: ", ep)
         env.show_performace_metrics()
         print("\n")
         ep += 1

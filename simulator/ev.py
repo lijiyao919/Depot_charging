@@ -49,15 +49,15 @@ class EV:
         return self._total_dc
 
     def add_soc(self, act):
-        soc_delta = act/Timer.get_per_time()
+        soc_delta = act/Timer.get_units_in_one_hour()
         self._soc = self._soc+soc_delta if self._soc+soc_delta < self._max_soc else self._max_soc
 
         if Timer.is_peak_hours():
             self._ec = SimpleCost.get_on_peak_ec_rate() * soc_delta
-            self._dc = SimpleCost.get_on_peak_dc_rate() * act
+            self._dc = (SimpleCost.get_on_peak_dc_rate() * act) / Timer.get_units_in_one_hour()
         else:
             self._ec = SimpleCost.get_off_peak_ec_rate() * soc_delta
-            self._dc = SimpleCost.get_off_peak_dc_rate() * act
+            self._dc = (SimpleCost.get_off_peak_dc_rate() * act) / Timer.get_units_in_one_hour()
         self._total_ec += self._ec
         self._total_dc += self._dc
 
@@ -66,7 +66,7 @@ if __name__=='__main__':
     ev = EV()
     print("Max soc: ", ev.max_soc)
     print("Initial soc now: ", ev.soc)
-    ev.add_soc(600)
+    ev.add_soc(6)
     print("soc now: ", ev.soc)
     print("energy charge:", ev.ec)
     print("demand charge0:", ev.dc)
@@ -74,7 +74,7 @@ if __name__=='__main__':
     print("Total demand charge0:", ev.total_dc)
 
     Timer._time_step = 1000
-    ev.add_soc(600)
+    ev.add_soc(120)
     print("soc now: ", ev.soc)
     print("energy charge:", ev.ec)
     print("demand charge0:", ev.dc)
@@ -82,6 +82,6 @@ if __name__=='__main__':
     print("Total demand charge:", ev.total_dc)
 
     ev.reset()
-    print("soc now: ", ev.soc)
+    print("soc now after reset: ", ev.soc)
     print("Total energy charge:", ev.total_ec)
     print("Total demand charge:", ev.total_dc)

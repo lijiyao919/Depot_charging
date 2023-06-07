@@ -9,7 +9,7 @@ ALPHA = 0.1
 GAMMA = 0.99
 
 EPS_START = 1
-EPS_END = 0.001
+EPS_END = 0
 EPS_DECAY = 4000
 
 class QL_Agent:
@@ -22,12 +22,9 @@ class QL_Agent:
         if random.random() > eps_threshold:
             act_idx = np.argmax(self.Q[s])
             act = acts[act_idx]
-            if act != 0:
-                print(self.Q[s])
         else:
-            #print("I play randomly", eps_threshold)
             act = random.choice(acts)
-        return act,eps_threshold
+        return act
 
     def learn(self, exp):
         s = QL_Agent._state_transform(exp["state"])
@@ -39,4 +36,4 @@ class QL_Agent:
 
     @staticmethod
     def _state_transform(state):
-        return (state["Time"], round(state["max_soc"]-state["soc"], 2))
+        return (state["Time"], round(state["max_soc"]-state["soc"], 1))
