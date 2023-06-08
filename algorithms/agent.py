@@ -5,6 +5,7 @@ import numpy as np
 
 class Generic_Agent(ABC):
     def __init__(self):
+        self.acts = [0, 2, 4, 6]
         self.act_tracker = []
 
     @abstractmethod

@@ -1,22 +1,20 @@
 from simulator.env import Env
-import random
-
-actions = [0, 2, 4, 6]
-
-def run_random():
+from algorithms.rand import Rand_Agent
+from algorithms.agent import Generic_Agent
+def run_rand():
     env = Env()
+    agent = Rand_Agent()
     state, _ = env.reset()
     while True:
-        if state["max_soc"] - state["soc"] == 0:
-            act = 0
-        else:
-            act = random.choice(actions)
+        act = agent.select_act(state, None)
         next_state, reward, terminate, _ = env.step(act)
         state = next_state
         if terminate:
             break
     env.show_performace_metrics()
+    return agent
 
 if __name__=='__main__':
-    run_random()
+    ag = run_rand()
+    Generic_Agent.plot_strategy(rand=ag)
         

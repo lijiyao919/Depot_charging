@@ -14,5 +14,3 @@ class Optim_Agent(Generic_Agent):
                 act = 2
         self.act_tracker.append(act)
         return act
-
-a = Optim_Agent()
