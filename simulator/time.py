@@ -23,6 +23,10 @@ class Timer:
         return Timer._time_step
 
     @staticmethod
+    def set_time_step(t):
+        Timer._time_step = t
+
+    @staticmethod
     def tick_time_step():
         Timer._time_step += Timer._simulated_interval
 
