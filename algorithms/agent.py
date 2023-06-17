@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
 from simulator.time import Timer
-import numpy as np
+import torch
+
+# Device configuration
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print('The device is: ', device)
 
 class Generic_Agent(ABC):
     def __init__(self):
