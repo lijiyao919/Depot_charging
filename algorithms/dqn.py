@@ -57,6 +57,8 @@ class DQN_Agent(Generic_Agent):
             act = self.acts[act_idx]
         else:
             act = random.choice(self.acts)
+        if ep == 29999:
+            self.act_tracker.append(act)
         return act
 
     def update(self, ep, done):

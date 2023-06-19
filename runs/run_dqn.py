@@ -28,5 +28,5 @@ def run_dqn():
 
 if __name__=='__main__':
     ag = run_dqn()
-    #Generic_Agent.plot_strategy(dqn=ag)
+    Generic_Agent.plot_strategy(dqn=ag)
 
