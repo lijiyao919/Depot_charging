@@ -4,9 +4,9 @@ import torch.optim as optim
 from simulator.time import Timer
 from algorithms.agent import device
 
-class MLP(nn.Module):
+class DQN_Net(nn.Module):
     def __init__(self, embed_dims, time_dims, hidden_dims, n_actions, eta):
-        super(MLP, self).__init__()
+        super(DQN_Net, self).__init__()
         self.embed = nn.Linear(1, embed_dims)
         self.hidden = nn.Linear(time_dims+embed_dims+1, hidden_dims)
         self.out = nn.Linear(hidden_dims, n_actions)
@@ -51,5 +51,5 @@ class MLP(nn.Module):
 
 #For Test
 if __name__=='__main__':
-    mlp = MLP(30, 72, 128, 4, 0.001).to(device)
+    mlp = DQN_Net(30, 72, 128, 4, 0.001).to(device)
     print(mlp([(1440, 0.8), (720, 0.5), (800, 0.68)]))

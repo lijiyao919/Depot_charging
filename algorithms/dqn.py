@@ -1,4 +1,4 @@
-from algorithms.models.mlp import MLP
+from algorithms.models.dqn_net import DQN_Net
 from algorithms.agent import Generic_Agent
 from algorithms.agent import device
 from collections import namedtuple
@@ -36,8 +36,8 @@ class DQN_Agent(Generic_Agent):
         self.batch_size = batch_size
         self.target_update = target_update_feq
 
-        self.policy_net = MLP(embed_dims, time_dims, hidden_dims, n_actions, eta).to(device)
-        self.target_net = MLP(embed_dims, time_dims, hidden_dims, n_actions, eta).to(device)
+        self.policy_net = DQN_Net(embed_dims, time_dims, hidden_dims, n_actions, eta).to(device)
+        self.target_net = DQN_Net(embed_dims, time_dims, hidden_dims, n_actions, eta).to(device)
 
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
