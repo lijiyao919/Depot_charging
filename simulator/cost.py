@@ -1,5 +1,4 @@
 import configparser
-from simulator.time import Timer
 import os
 
 
@@ -32,10 +31,10 @@ class SimpleCost:
 
 #For test
 if __name__=='__main__':
-    print("Energy charge rate on peak: ", SimpleCost.get_on_peak_ec_rate())
-    print("Energy charge rate off peak: ", SimpleCost.get_off_peak_ec_rate())
-    print("Demand charge rate on peak: ", SimpleCost.get_on_peak_dc_rate())
-    print("Demand charge rate off peak: ", SimpleCost.get_off_peak_dc_rate())
+    print(f"Energy charge rate on peak: ${SimpleCost.get_on_peak_ec_rate()}/kWh")
+    print(f"Energy charge rate off peak: ${SimpleCost.get_off_peak_ec_rate()}/kWh")
+    print(f"Demand charge rate on peak: ${SimpleCost.get_on_peak_dc_rate()}/hour")
+    print(f"Demand charge rate off peak: ${SimpleCost.get_off_peak_dc_rate()}/hour")
 
 
 
