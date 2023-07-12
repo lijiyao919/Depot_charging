@@ -9,8 +9,9 @@ print('The device is: ', device)
 
 class Generic_Agent(ABC):
     def __init__(self):
-        self.acts = [0, 2, 4, 6]
+        self.acts = [0, 30, 60, 90]
         self.act_tracker = []
+        self.soc_tracker = []
 
     @abstractmethod
     def select_act(self, state, ep):
@@ -18,11 +19,25 @@ class Generic_Agent(ABC):
 
     @staticmethod
     def plot_strategy(**kwargs):
-        time_step = range(Timer.get_start_time(), Timer.get_end_time()+1, Timer.get_simulated_interval())
         for sol_name, sol_obj in kwargs.items():
-            plt.plot(time_step, sol_obj.act_tracker, label=sol_name)
-        xticks = range(Timer.get_start_time(), Timer.get_end_time()+1, 60)
-        xticks_label = range(Timer.get_start_time()//60, Timer.get_end_time()//60+1)
+            time_steps, acts = zip(*sol_obj.act_tracker)
+            plt.plot(time_steps, acts, label=sol_name)
+        xticks = range(Timer.get_start_time(), Timer.get_end_time()+2, 60)
+        xticks_label = range(Timer.get_start_time()//60, Timer.get_end_time()//60+2)
+        plt.xticks(xticks, xticks_label)
+        plt.yticks(sol_obj.acts, sol_obj.acts)
+        plt.xlabel("Time")
+        plt.ylabel("Act (Kw)")
+        plt.legend()
+        plt.show()
+
+    @staticmethod
+    def plot_soc(**kwargs):
+        for soc_name, soc_obj in kwargs.items():
+            time_steps, socs = zip(*soc_obj.soc_tracker)
+            plt.plot(time_steps, socs, label=soc_name)
+        xticks = range(Timer.get_start_time(), Timer.get_end_time() + 2, 60)
+        xticks_label = range(Timer.get_start_time() // 60, Timer.get_end_time() // 60 + 2)
         plt.xticks(xticks, xticks_label)
         plt.xlabel("Time")
         plt.ylabel("Act (Kw)")
