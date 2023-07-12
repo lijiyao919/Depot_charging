@@ -1,6 +1,7 @@
 from simulator.env import Env
 from algorithms.rand import Rand_Agent
 from algorithms.agent import Generic_Agent
+
 def run_rand():
     env = Env()
     agent = Rand_Agent()
@@ -17,4 +18,5 @@ def run_rand():
 if __name__=='__main__':
     ag = run_rand()
     Generic_Agent.plot_strategy(rand=ag)
+    Generic_Agent.plot_soc(rand=ag)
         
