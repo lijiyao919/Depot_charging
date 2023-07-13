@@ -9,7 +9,7 @@ print('The device is: ', device)
 
 class Generic_Agent(ABC):
     def __init__(self):
-        self.acts = [0, 30, 60, 90]
+        self.acts = [0, 50, 100, 150, 200, 250, 300, 350]
         self.act_tracker = []
         self.soc_tracker = []
 
