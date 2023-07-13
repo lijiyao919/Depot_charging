@@ -3,6 +3,7 @@ import numpy as np
 import random
 import math
 from algorithms.agent import Generic_Agent
+from simulator.time import Timer
 
 ALPHA = 0.1
 GAMMA = 0.99
@@ -10,6 +11,8 @@ GAMMA = 0.99
 EPS_START = 1
 EPS_END = 0
 EPS_DECAY = 4000
+
+random.seed(100)
 
 class QL_Agent(Generic_Agent):
     def __init__(self):
@@ -24,8 +27,9 @@ class QL_Agent(Generic_Agent):
             act = self.acts[act_idx]
         else:
             act = random.choice(self.acts)
-        if ep == 29999:
-            self.act_tracker.append(act)
+        if ep == 69999:
+            self.soc_tracker.append((Timer.get_time_step(), state["soc"]))
+            self.act_tracker.append((Timer.get_time_step(), act))
         return act
 
     def learn(self, exp):
@@ -38,4 +42,4 @@ class QL_Agent(Generic_Agent):
 
     @staticmethod
     def _state_transform(state):
-        return (state["Time"], round(state["max_soc"]-state["soc"], 1))
+        return (state["Time"], int((state["max_soc"]-state["soc"])//10))

@@ -6,5 +6,6 @@ from algorithms.agent import Generic_Agent
 if __name__=='__main__':
     optim_ag = run_optim()
     ql_ag = run_ql()
-    rand_ag = run_rand()
-    Generic_Agent.plot_strategy(optim=optim_ag, qlearning=ql_ag, rand=rand_ag)
+    #rand_ag = run_rand()
+    Generic_Agent.plot_strategy(optim=optim_ag, qlearning=ql_ag)
+    Generic_Agent.plot_soc(optim=optim_ag, qlearning=ql_ag)

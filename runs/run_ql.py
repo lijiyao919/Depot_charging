@@ -2,7 +2,7 @@ from algorithms.ql import QL_Agent
 from algorithms.agent import Generic_Agent
 from simulator.env import Env
 
-TOTAL_EPISODE = 30000
+TOTAL_EPISODE = 70000
 
 def run_ql():
     env = Env()
@@ -31,4 +31,5 @@ def run_ql():
 if __name__=='__main__':
     ag = run_ql()
     Generic_Agent.plot_strategy(qlearning=ag)
+    Generic_Agent.plot_soc(qlearning=ag)
 

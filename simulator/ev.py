@@ -20,7 +20,7 @@ class EV:
         self._dc = 0
 
     def reset(self):
-        #self._soc = self._initial_soc
+        self._soc = self._initial_soc
         self._total_ec = 0
         self._total_dc = 0
         self._ec = 0
