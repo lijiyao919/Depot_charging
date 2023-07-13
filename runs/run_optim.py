@@ -17,3 +17,4 @@ def run_optim():
 if __name__=='__main__':
     ag = run_optim()
     Generic_Agent.plot_strategy(optimal=ag)
+    Generic_Agent.plot_soc(optimal=ag)
