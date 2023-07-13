@@ -9,25 +9,28 @@ class Reward(ABC):
         raise NotImplementedError("Virtual method not implemented.")
 
 class SimpleReward(Reward):
-    def feedback(self, ev):
-        if Timer.is_trip_started():
-            if ev.is_soc_sufficient_for_one_trip():
-                return 0
-            else:
-                return -1000
+    def feedback(self, ev, success_trip=False):
+        r = -(ev.ec+ev.dc)
+        if success_trip:
+            r += 0
+        elif Timer.is_trip_started():
+            r -= 1000
         else:
-            return -(ev.ec+ev.dc)
+            pass
+        return r
 
 #For test
 if __name__=='__main__':
     reward = SimpleReward()
     ev = EV()
-    ev.add_soc(600)
+    Timer._time_step = 0
+    ev.add_soc(60)
     print("EV's soc: ", ev.soc)
     print(f"reward feedback at time {Timer.get_time_step()}: ",  reward.feedback(ev))
     print()
 
     Timer._time_step = 360
+    ev.add_soc(5)
     print("EV's soc: ", ev.soc)
     print(f"reward feedback at time {Timer.get_time_step()}: ",  reward.feedback(ev))
     print()
@@ -39,7 +42,7 @@ if __name__=='__main__':
     print()
 
     Timer._time_step = 390
-    ev.consume_soc_for_one_trip()
+    ev.add_soc(0)
+    print(f"reward feedback at time {Timer.get_time_step()}: ", reward.feedback(ev, True))
     ev.consume_soc_for_one_trip()
     print("EV's soc: ", ev.soc)
-    print(f"reward feedback at time {Timer.get_time_step()}: ", reward.feedback(ev))

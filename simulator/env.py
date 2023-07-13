@@ -7,21 +7,29 @@ class Env:
         self._ev = EV()
         self._reward_model = SimpleReward()
         self._info = {}
+        self._total_reward = 0
+        self._num_success_trips = 0
 
     def reset(self):
         Timer.reset()
         self._ev.reset()
+        self._total_reward = 0
+        self._num_success_trips = 0
         return self._state(), self._info
 
     def step(self, act):
         if Timer.is_trip_started() and self._ev.is_soc_sufficient_for_one_trip():
+            self._ev.add_soc(0)
+            reward = self._reward_model.feedback(self._ev, True)
+            self._num_success_trips += 1
             self._ev.consume_soc_for_one_trip()
-            reward = self._reward_model.feedback(self._ev)
             Timer.set_time_step(Timer.get_time_step() + Timer.get_operation_duration())
         else:
             self._ev.add_soc(act)
             reward = self._reward_model.feedback(self._ev)
             Timer.tick_time_step()
+
+        self._total_reward += reward
 
         if Timer.is_end_time():
             done = True
@@ -31,11 +39,12 @@ class Env:
         return self._state(), reward, done, self._info
 
     def show_performace_metrics(self):
-        print("the cost (ec+dc): ", self._ev.total_ec+self._ev.total_dc)
-        print("the SoC (kWh): ", self._ev.soc)
+        print(f"the cost (ec+dc): ${self._ev.total_ec+self._ev.total_dc}")
+        print(f"total reward: {self._total_reward}")
+        print(f"success trips: {self._num_success_trips}")
 
     def _state(self):
-        return {"Time": Timer.get_time_step(), "soc":self._ev.soc, "max_soc":self._ev.max_soc}
+        return {"Time": Timer.get_time_step(), "soc":self._ev.soc, "max_soc":self._ev.max_soc, "soc_for_one_trip":self._ev.soc_for_one_trip}
 
 #For test
 if __name__=='__main__':
