@@ -40,6 +40,6 @@ class Generic_Agent(ABC):
         xticks_label = range(Timer.get_start_time() // 60, Timer.get_end_time() // 60 + 2)
         plt.xticks(xticks, xticks_label)
         plt.xlabel("Time")
-        plt.ylabel("Act (Kw)")
+        plt.ylabel("SoC (kWh)")
         plt.legend()
         plt.show()
