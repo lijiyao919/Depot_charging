@@ -29,6 +29,7 @@ class Generic_Agent(ABC):
         plt.xlabel("Time")
         plt.ylabel("Act (Kw)")
         plt.legend()
+        plt.grid(True)
         plt.show()
 
     @staticmethod
@@ -42,4 +43,5 @@ class Generic_Agent(ABC):
         plt.xlabel("Time")
         plt.ylabel("SoC (kWh)")
         plt.legend()
+        plt.grid(True)
         plt.show()
