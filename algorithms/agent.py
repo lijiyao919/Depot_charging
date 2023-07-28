@@ -17,6 +17,16 @@ class Generic_Agent(ABC):
     def select_act(self, state, ep):
         raise NotImplementedError("select_act must be implemented in subclasses")
 
+    def record(self, info):
+        rec = info['rec']
+        time = rec.time
+        soc = rec.soc
+        act = rec.act
+
+        self.soc_tracker.append((time, soc))
+        self.act_tracker.append((time, act))
+
+
     @staticmethod
     def plot_strategy(**kwargs):
         for sol_name, sol_obj in kwargs.items():
@@ -27,7 +37,7 @@ class Generic_Agent(ABC):
         plt.xticks(xticks, xticks_label)
         plt.yticks(sol_obj.acts, sol_obj.acts)
         plt.xlabel("Time")
-        plt.ylabel("Act (Kw)")
+        plt.ylabel("Act (kW)")
         plt.legend()
         plt.grid(True)
         plt.show()

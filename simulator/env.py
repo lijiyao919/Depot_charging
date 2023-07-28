@@ -6,6 +6,7 @@ from collections import namedtuple
 class Env:
 
     State = namedtuple('State', ["Time", "soc", "max_soc", "soc_for_one_trip"])
+    Record = namedtuple('Record', ['time', 'soc', 'act'])
 
     def __init__(self):
         self._ev = EV()
@@ -22,19 +23,27 @@ class Env:
         return self._state(), self._info
 
     def step(self, act):
+        #record before act
+        rec = {}
+        rec['time'] = Timer.get_time_step()
+        rec['soc'] = self._ev.soc
+
+        #run with act
         if Timer.is_trip_started() and self._ev.is_soc_sufficient_for_one_trip():
             self._ev.add_soc(0)
+            rec['act'] = 0
             reward = self._reward_model.feedback(self._ev, True)
             self._num_success_trips += 1
             self._ev.consume_soc_for_one_trip()
             Timer.set_time_step(Timer.get_time_step() + Timer.get_operation_duration())
         else:
             self._ev.add_soc(act)
+            rec['act'] = act
             reward = self._reward_model.feedback(self._ev)
             Timer.tick_time_step()
 
         self._total_reward += reward
-
+        self._info['rec'] = Env.Record(**rec)
         if Timer.is_end_time():
             done = True
         else:

@@ -14,6 +14,4 @@ class Optim_Agent(Generic_Agent):
                 act = 120
             else:
                 act = 0
-        self.soc_tracker.append((Timer.get_time_step(), state.soc))
-        self.act_tracker.append((Timer.get_time_step(), act))
         return act

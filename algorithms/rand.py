@@ -8,6 +8,4 @@ class Rand_Agent(Generic_Agent):
             act = 0
         else:
             act = random.choice(self.acts)
-        self.soc_tracker.append((Timer.get_time_step(), state.soc))
-        self.act_tracker.append((Timer.get_time_step(), act))
         return act

@@ -7,8 +7,9 @@ def run_optim():
     agent = Optim_Agent()
     while True:
         act = agent.select_act(state, None)
-        next_state, reward, terminate, _ = env.step(act)
+        next_state, reward, terminate, info = env.step(act)
         state = next_state
+        agent.record(info)
         if terminate:
             break
     env.show_performace_metrics()

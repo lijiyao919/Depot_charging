@@ -15,13 +15,15 @@ def run_ql():
         done = False
         while not done:
             act = agent.select_act(state, ep)
-            next_state, reward, done, _ = env.step(act)
+            next_state, reward, done, info = env.step(act)
             exp["state"] = state
             exp["next_state"] = next_state
             exp["reward"] = reward
             exp["act"] = act
             agent.learn(exp)
             state = next_state
+            if ep==TOTAL_EPISODE-1:
+                agent.record(info)
         print("The episode: ", ep)
         env.show_performace_metrics()
         print("\n")
