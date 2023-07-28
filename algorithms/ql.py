@@ -28,7 +28,7 @@ class QL_Agent(Generic_Agent):
         else:
             act = random.choice(self.acts)
         if ep == 69999:
-            self.soc_tracker.append((Timer.get_time_step(), state["soc"]))
+            self.soc_tracker.append((Timer.get_time_step(), state.soc))
             self.act_tracker.append((Timer.get_time_step(), act))
         return act
 
@@ -42,4 +42,4 @@ class QL_Agent(Generic_Agent):
 
     @staticmethod
     def _state_transform(state):
-        return (state["Time"], int((state["max_soc"]-state["soc"])//10))
+        return (state.Time, int((state.max_soc-state.soc)//10))

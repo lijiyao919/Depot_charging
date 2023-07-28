@@ -1,8 +1,12 @@
 from simulator.time import Timer
 from simulator.ev import EV
 from simulator.rewards import SimpleReward
+from collections import namedtuple
 
 class Env:
+
+    State = namedtuple('State', ["Time", "soc", "max_soc", "soc_for_one_trip"])
+
     def __init__(self):
         self._ev = EV()
         self._reward_model = SimpleReward()
@@ -44,7 +48,7 @@ class Env:
         print(f"success trips: {self._num_success_trips}")
 
     def _state(self):
-        return {"Time": Timer.get_time_step(), "soc":self._ev.soc, "max_soc":self._ev.max_soc, "soc_for_one_trip":self._ev.soc_for_one_trip}
+        return Env.State(Timer.get_time_step(), self._ev.soc, self._ev.max_soc, self._ev.soc_for_one_trip)
 
 #For test
 if __name__=='__main__':
