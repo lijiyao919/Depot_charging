@@ -52,7 +52,8 @@ class Env:
         return self._state(), reward, done, self._info
 
     def show_performace_metrics(self):
-        print(f"the cost (ec+dc): ${self._ev.total_ec+self._ev.total_dc}")
+        print(f"the energy cost: ${self._ev.total_ec}")
+        print(f"the demand cost: ${self._ev.total_dc()}")
         print(f"total reward: {self._total_reward}")
         print(f"success trips: {self._num_success_trips}")
 
