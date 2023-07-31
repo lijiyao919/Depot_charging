@@ -21,6 +21,7 @@ class EV:
         self._prev_peak = False
 
         self._soc = self._initial_soc
+        self._soc_delta = 0
         self._total_ec = 0
 
     def reset(self):
@@ -30,6 +31,7 @@ class EV:
         self._kW_max_off_peak = 0
         self._prev_peak = False
         self._track_kW.clear()
+        self._soc_delta = 0
 
     @property
     def max_soc(self):
@@ -38,6 +40,10 @@ class EV:
     @property
     def soc(self):
         return self._soc
+
+    @property
+    def soc_delta(self):
+        return self._soc_delta
 
     @property
     def total_ec(self):
@@ -61,6 +67,7 @@ class EV:
     def add_soc(self, act):
         #start a trip
         if act is None:
+            self._soc_delta = 0
             self._track_kW.clear()
             return
 
@@ -69,17 +76,17 @@ class EV:
             self._track_kW.clear()
 
         #add sOc
-        soc_delta = act/Timer.get_units_in_one_hour()
-        self._soc = self._soc+soc_delta if self._soc+soc_delta < self._max_soc else self._max_soc
+        self._soc_delta = act/Timer.get_units_in_one_hour()
+        self._soc = self._soc+self._soc_delta if self._soc+self._soc_delta < self._max_soc else self._max_soc
         self._track_kW.append(act)
 
         #ec and dc
         if Timer.is_peak_hours():
-            self._total_ec += SimpleCost.get_on_peak_ec_rate() * soc_delta
+            self._total_ec += SimpleCost.get_on_peak_ec_rate() * self._soc_delta
             self._kW_max_on_peak = max(self._kW_max_on_peak, sum(self._track_kW))
             self._prev_peak = True
         else:
-            self._total_ec += SimpleCost.get_off_peak_ec_rate() * soc_delta
+            self._total_ec += SimpleCost.get_off_peak_ec_rate() * self._soc_delta
             self._kW_max_off_peak = max(self._kW_max_off_peak, sum(self._track_kW))
             self._prev_peak = False
 
@@ -100,13 +107,15 @@ if __name__=='__main__':
 
     print("####Add None in SoC####")
     ev.add_soc(None)
+    print(f"adding soc: {ev.soc_delta}kWh")
     print(f"soc after adding None: {ev.soc}kWh")
     print(f"Total energy charge: ${ev.total_ec}")
-    print(f"Total demand charge: ${ev.total_dc}")
+    print(f"Total demand charge: ${ev.total_dc()}")
     print()
 
     print("####Add Soc in off peak hours####")
     ev.add_soc(90)
+    print(f"adding soc: {ev.soc_delta}kWh")
     print(f"soc after adding 90kW for {Timer.get_simulated_interval()} minutes: {ev.soc}kWh")
     print(f"Total energy charge: ${ev.total_ec}")
     print(f"is sufficient for one trip: {ev.is_soc_sufficient_for_one_trip()}")
@@ -115,6 +124,7 @@ if __name__=='__main__':
     print("####Add Soc in on peak hours####")
     Timer.set_time_step(1000)
     ev.add_soc(480)
+    print(f"adding soc: {ev.soc_delta}kWh")
     print(f"soc after adding 480kW for {Timer.get_simulated_interval()} minutes: {ev.soc}kWh")
     print("Total energy charge:", ev.total_ec)
     print(f"is sufficient for one trip: {ev.is_soc_sufficient_for_one_trip()}")
