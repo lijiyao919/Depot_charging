@@ -13,6 +13,10 @@ class SimpleReward(Reward):
         self._soc_delta_max_on_peak = 0
         self._soc_delta_max_off_peak = 0
 
+    def reset(self):
+        self._soc_delta_max_on_peak = 0
+        self._soc_delta_max_off_peak = 0
+
     def feedback(self, ev, success_trip=False):
         r = 0
         if success_trip:

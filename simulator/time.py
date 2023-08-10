@@ -3,6 +3,7 @@ import os
 
 class Timer:
     _time_step = 0
+    _episode = 0
     _config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
 
     _config = configparser.ConfigParser()
@@ -33,6 +34,14 @@ class Timer:
     @staticmethod
     def tick_time_step():
         Timer._time_step += Timer._simulated_interval
+
+    @staticmethod
+    def get_episode():
+        return Timer._episode
+
+    @staticmethod
+    def tick_episode():
+        Timer._episode += 1
 
     @staticmethod
     def get_start_time():

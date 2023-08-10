@@ -20,6 +20,7 @@ class Env:
         self._ev.reset()
         self._total_reward = 0
         self._num_success_trips = 0
+        self._reward_model.reset()
         return self._state(), self._info
 
     def step(self, act):
