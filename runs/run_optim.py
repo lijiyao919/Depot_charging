@@ -1,3 +1,6 @@
+import sys
+sys.path.append('C:\\Users\\Jiyao\\PycharmProjects\\Depot_charging')
+
 from simulator.env import Env
 from algorithms.optim import Optim_Agent
 from algorithms.agent import Generic_Agent

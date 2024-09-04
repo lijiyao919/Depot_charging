@@ -1,3 +1,6 @@
+import sys
+sys.path.append('C:\\Users\\Jiyao\\PycharmProjects\\Depot_charging')
+
 from algorithms.dqn import DQN_Agent
 from algorithms.agent import Generic_Agent
 from simulator.env import Env

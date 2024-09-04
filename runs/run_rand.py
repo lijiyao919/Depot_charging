@@ -1,3 +1,6 @@
+import sys
+sys.path.append('C:\\Users\\Jiyao\\PycharmProjects\\Depot_charging')
+
 from simulator.env import Env
 from algorithms.rand import Rand_Agent
 from algorithms.agent import Generic_Agent

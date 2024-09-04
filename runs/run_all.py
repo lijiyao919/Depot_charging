@@ -1,3 +1,6 @@
+import sys
+sys.path.append('C:\\Users\\Jiyao\\PycharmProjects\\Depot_charging')
+
 from runs.run_optim import run_optim
 from runs.run_ql import run_ql
 from runs.run_rand import run_rand
